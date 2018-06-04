@@ -4,11 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.zoctan</groupId>
-    <artifactId>spring-boot-api-fast</artifactId>
+    <artifactId>spring-boot-api-seedling</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
 
@@ -184,22 +186,33 @@
         </plugins>
     </build>
 
+
     <repositories>
         <repository>
-            <id>aliyun-repos</id>
+            <id>ALiYun-repo</id>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
             </snapshots>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
-            <id>aliyun-plugin</id>
+            <id>ALiYun-plugin</id>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>

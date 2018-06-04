@@ -33,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String token = this.jwtUtil.getTokenFromRequest(request);
         if (token != null) {
             final String username = this.jwtUtil.getUsername(token);
-            log.info("JwtFilter => user<{}> token : {}", username, token);
+            log.debug("JwtFilter => user<{}> token : {}", username, token);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 if (this.jwtUtil.validateToken(token)) {
@@ -42,11 +42,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                    log.info("JwtFilter => user<{}> is authorized, set security context", username);
+                    log.debug("JwtFilter => user<{}> is authorized, set security context", username);
                 }
             }
         } else {
-            log.info("Anonymous request URL<{}>", request.getRequestURL());
+            log.debug("Anonymous request URL<{}>", request.getRequestURL());
         }
         filterChain.doFilter(request, response);
     }

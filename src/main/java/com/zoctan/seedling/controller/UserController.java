@@ -12,13 +12,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -26,11 +24,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import java.security.Principal;
 import java.util.List;
 
 /**
  * @author Zoctan
- * @date 2018/5/27
+ * @date 2018/6/4
  */
 @Api(value = "用户接口")
 @RestController
@@ -130,13 +130,14 @@ public class UserController {
     }
 
     /**
-     * @AuthenticationPrincipal 该注解可以获得当前用户
-     * https://docs.spring.io/spring-security/site/docs/3.2.3.RELEASE/reference/htmlsingle/#mvc-authentication-principal
+     * 注解 @AuthenticationPrincipal 返回的是 Authentication.getPrincipal()
+     * https://docs.spring.io/spring-security/site/docs/5.0.0.RELEASE/api/
+     * Principal 由 spring security 注入
      */
     @ApiOperation(value = "用户注销")
     @GetMapping("/logout")
-    public Result logout(@AuthenticationPrincipal final UserDetails userDetails) {
-        this.jwtUtil.invalidRedisStore(userDetails.getUsername());
+    public Result logout(final Principal user) {
+        this.jwtUtil.invalidRedisStore(user.getName());
         return ResultGenerator.genOkResult();
     }
 }

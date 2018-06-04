@@ -4,39 +4,64 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * 统一API响应结果封装
+ *
  * @author Zoctan
- * @date 2018/5/27
+ * @date 2018/6/4
  */
 public class Result {
-    private int status;
-    private String message;
+    /**
+     * 状态码
+     */
+    private Integer code;
+    /**
+     * 消息
+     */
+    private String msg;
+    /**
+     * 数据内容，比如列表，实体
+     */
     private Object data;
 
-    public Result setStatus(final int status) {
-        this.status = status;
-        return this;
+    private Result(Builder builder) {
+        this.code = builder.code;
+        this.msg = builder.msg;
+        this.data = builder.data;
     }
 
-    public int getStatus() {
-        return this.status;
+    public static class Builder {
+        private Integer code;
+        private String msg;
+        private Object data;
+
+        public Builder(Integer code) {
+            this.code = code;
+        }
+
+        public Builder msg(String msg) {
+            this.msg = msg;
+            return this;
+        }
+
+        public Builder data(Object data) {
+            this.data = data;
+            return this;
+        }
+
+        public Result build() {
+            return new Result(this);
+        }
     }
 
-    public String getMessage() {
-        return this.message;
+    public Integer getCode() {
+        return code;
     }
 
-    public Result setMessage(final String message) {
-        this.message = message;
-        return this;
+    public String getMsg() {
+        return msg;
     }
 
     public Object getData() {
-        return this.data;
-    }
-
-    public Result setData(final Object data) {
-        this.data = data;
-        return this;
+        return data;
     }
 
     @Override
